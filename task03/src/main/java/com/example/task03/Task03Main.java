@@ -1,21 +1,33 @@
 package com.example.task03;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 
 public class Task03Main {
     public static void main(String[] args) throws IOException {
-        //здесь вы можете вручную протестировать ваше решение, вызывая реализуемый метод и смотря результат
-        // например вот так:
 
-        /*
-        System.out.println(readAsString(new FileInputStream("task03/src/test/resources/input.test"), Charset.forName("KOI8-R")));
-        */
+        System.out.println(readAsString(new FileInputStream("task03/src/test/resources/input.test"),
+                Charset.forName("KOI8-R")));
+
     }
 
     public static String readAsString(InputStream inputStream, Charset charset) throws IOException {
-        // your implementation here
-        return "";
+        // 1. Проверка на null (хорошая практика)
+        if (inputStream == null || charset == null) {
+            throw new IllegalArgumentException("InputStream и Charset не могут быть null");
+        }
+
+        Reader reader = new InputStreamReader(inputStream, charset);
+
+        StringBuilder sb = new StringBuilder();
+
+        char[] buffer = new char[1024];
+        int charsRead;
+
+        while ((charsRead = reader.read(buffer)) != -1) {
+            sb.append(buffer, 0, charsRead);
+        }
+        return sb.toString();
     }
 }
